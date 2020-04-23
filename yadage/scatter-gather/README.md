@@ -1,6 +1,6 @@
 ### Simple workflow showing scatter-gather paradigm in yadage
 
-Run with 
+Example taken from [Awesome Workshop](https://awesome-workshop.github.io/reproducible-analyses/07-higgstotautau-parallel/index.html). Run with 
 
 ```console
 yadage-run workdir workflow.yaml input.yaml
