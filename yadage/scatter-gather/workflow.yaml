@@ -1,12 +1,13 @@
 stages:
-  - name: skim
+  - name: step1
     dependencies: [init]
     scheduler:
       scheduler_type: multistep-stage
       parameters:
         input_file: {step: init, output: files}
-        output_file: '{workdir}/skimmed.root'
+        output_file: '{workdir}/output.txt'
+      batchsize: 2
       scatter:
          method: zip
          parameters: [input_file]
-      step: {$ref: 'steps.yaml#/skim'}
+      step: {$ref: 'steps.yaml#/step1'}

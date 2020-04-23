@@ -1,4 +1,4 @@
-skim:
+step1:
   process:
     process_type: 'interpolated-script-cmd'
     script: |
