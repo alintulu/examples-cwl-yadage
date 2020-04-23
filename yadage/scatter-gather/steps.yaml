@@ -1,0 +1,12 @@
+skim:
+  process:
+    process_type: 'interpolated-script-cmd'
+    script: |
+      echo 'do something with {input_file}' > {output_file}
+  environment:
+    environment_type: 'docker-encapsulated'
+    image: busybox 
+  publisher:
+    publisher_type: interpolated-pub
+    publish:
+      skimmed_file: '{output_file}'

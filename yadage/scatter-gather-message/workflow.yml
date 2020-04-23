@@ -1,0 +1,27 @@
+stages:
+  - name: scatter
+    dependencies: [init]
+    scheduler:
+      scheduler_type: singlestep-stage
+      parameters:
+        input: {step: init, output: message_array}
+        outputfile: '{workdir}/scatter_gather.txt'
+      step:
+        process:
+          process_type: 'interpolated-script-cmd'
+          script: |
+           echo {input} >> {outputfile}
+           i=0
+           for x in {input}; do
+             echo $x >> {outputfile};
+             i=$(($i+1))
+           done
+           echo $i >>  {outputfile} 
+        publisher:
+          publisher_type: 'frompar-pub'
+          outputmap:
+            outputfile: outputfile
+        environment:
+          environment_type: 'docker-encapsulated'
+          image: busybox
+
