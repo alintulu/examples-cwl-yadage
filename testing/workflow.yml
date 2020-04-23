@@ -1,5 +1,6 @@
 stages:
   - name: hello_world
+    dependencies: [init]
     scheduler:
       scheduler_type: singlestep-stage
       parameters:
@@ -14,4 +15,6 @@ stages:
           outputmap:
             outputfile: outputfile
         environment:
-          environment_type: 'localproc-env'
+          environment_type: 'docker-encapsulated'
+          image: busybox
+
