@@ -1,0 +1,20 @@
+stepA:
+  process:
+    process_type: string-interpolated-cmd
+    cmd: echo hello > {input} 
+  environment:
+    environment_type: localproc-env
+  publisher:
+    publisher_type: 'constant-pub'
+    publish:
+      outputA: 'output'
+stepB:
+  process:
+    process_type: string-interpolated-cmd
+    cmd: echo bye > {input}
+  environment:
+    environment_type: localproc-env
+  publisher:
+    publisher_type: 'constant-pub'
+    publish:
+      outputB: 'output'
