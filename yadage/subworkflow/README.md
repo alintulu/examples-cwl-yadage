@@ -34,3 +34,27 @@ To see what I mean:
 3. Gather the output from previous step in stageB and perform stage reduce
  * input: N text files
  * output: one text file
+
+
+``` 
+Input: 
+  - 1
+  - 2
+  - 3
+
+    Scatter                    
+Running parallel                                       Gather             Running single
+
+------------                          -------------
+|stageA - 1|  -> Output: outputA1.txt | stageB - 1| \ outputB1.txt
+------------                          -------------   \
+                                                        \
+------------                          -------------       \          ----------
+|stageA - 2|  -> Output: outputA2.txt | stageB - 2| outputB2.txt --  | stageC | -> Output: output.txt
+------------                          -------------       /          ----------
+                                                         /
+------------                           -------------   /
+|stageA - 3|  -> Output: outputA3.txt  | stageB - 3| / outputB3.txt
+------------                           -------------
+
+```
