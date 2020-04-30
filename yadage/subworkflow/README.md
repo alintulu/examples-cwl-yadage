@@ -10,7 +10,7 @@ Why subworkflows? You can define an entire workflow to run as a single step in a
 
 The file workflow.yaml starts by calling subworkflow.yml. The subworkflow defines two unique steps, the second depending on the first. The second step expects as input a file from the first step, it will wait until everything in step one is finished before starting.
 
-The subworkflow is called as a multistep-stage meaning that N number of jobs are created for the first step, each job having a unique input read from `inputs.yaml`. Without a subworfklow the second step would have to wait until all N jobs are done in step one, despite only depending on the output from one of those jobs. Fortunately with a subworkflow, scattering on steps can proceed independently. This mean that when job 5 is done with step one (create ntuple) it can continue to step two (list lumi sections) without having to wait for job 4 (or any other job) to finish step one.
+The subworkflow is called as a multistep-stage meaning that N number of jobs are created for the first step, each job having a unique input read from `inputs.yaml`. Without a subworfklow the second step would have to wait until all N jobs are done in step one, despite only depending on the output from one of those jobs. Fortunately with a subworkflow, scattering on steps can proceed independently. This mean that when job 5 is done with step one (stageA) it can continue to step two (stageB) without having to wait for job 4 (or any other job) to finish step one.
 
 To see what I mean:
 
