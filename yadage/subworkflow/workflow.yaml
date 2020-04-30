@@ -4,16 +4,16 @@ stages:
     scheduler:
       scheduler_type: multistep-stage
       parameters:
-        inputpar: [1,2,3]
-        #inputpar: {stages: init, output: input, unwrap: true}
+        input: {step: init, output: input, unwrap: true}
       workflow: {$ref: subflow.yml}
       scatter:
         method: zip
-        parameters: [inputpar]
+        parameters: [input]
   - name: reduce
     dependencies: [map]
     scheduler:
       scheduler_type: singlestep-stage
       parameters:
-        input: {stages: 'map.[*].stage1', output: outputA}
-      step: {$ref: steps.yml#/stepA}
+        input_file: {stages: 'map.[*].stageB', output: outputB}
+        output_file: '{workdir}/output'
+      step: {$ref: steps.yml#/stepC}

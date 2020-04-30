@@ -1,15 +1,17 @@
 stages:
-  - name: stage1
+  - name: stageA
     dependencies: ['init']
     scheduler:
       scheduler_type: singlestep-stage
       parameters:
-        input: {stages: init, output: inputpar, unwrap: true}
+        input_file: {step: init, output: input}
+        output_file: '{workdir}/output'
       step: {$ref: steps.yml#/stepA}
-  - name: stage2
-    dependencies: ['stage1']
+  - name: stageB
+    dependencies: ['stageA']
     scheduler:
       scheduler_type: singlestep-stage
       parameters:
-        input: {stages: stage1, output: outputA, unwrap: true}
+        input_file: {stages: stageA, output: outputA}
+        output_file: '{workdir}/output'
       step: {$ref: steps.yml#/stepB}

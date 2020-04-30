@@ -1,20 +1,30 @@
 stepA:
   process:
     process_type: string-interpolated-cmd
-    cmd: echo hello > {input} 
+    cmd: echo Create file {input_file} > {output_file}
   environment:
     environment_type: localproc-env
   publisher:
-    publisher_type: 'constant-pub'
+    publisher_type: 'interpolated-pub'
     publish:
-      outputA: 'output'
+      outputA: '{output_file}'
 stepB:
   process:
     process_type: string-interpolated-cmd
-    cmd: echo bye > {input}
+    cmd: cp {input_file} {output_file}; echo Continue on file >> {output_file}
   environment:
     environment_type: localproc-env
   publisher:
-    publisher_type: 'constant-pub'
+    publisher_type: 'interpolated-pub'
     publish:
-      outputB: 'output'
+      outputB: '{output_file}'
+stepC:
+  process:
+    process_type: string-interpolated-cmd
+    cmd: cat {input_file} > {output_file}
+  environment:
+    environment_type: localproc-env
+  publisher:
+    publisher_type: 'interpolated-pub'
+    publish:
+      outputC: '{output_file}'
