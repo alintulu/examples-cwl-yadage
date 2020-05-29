@@ -1,0 +1,39 @@
+stages:
+  - name: stage1
+    scheduler:
+      scheduler_type: singlestep-stage
+      parameters:
+        input: ['zero', 'one', 'two']
+        output: '{workdir}/numbers.yml'
+      step:
+          process:
+            process_type: 'string-interpolated-cmd'
+            cmd: 'echo "numbers:" > {output}; for i in {input}; do echo "  - $i" >> {output}; done'
+          publisher:
+            publisher_type: fromyaml-pub
+            yamlfile: 'numbers.yml'
+          environment:
+            environment_type: docker-encapsulated
+            image: busybox
+
+  - name: stage2
+    dependencies: [stage1]
+    scheduler:
+      scheduler_type: multistep-stage
+      parameters:
+        input: {stages: 'stage1', output: numbers, unwrap: true}
+        output: '{workdir}/number.txt'
+      scatter:
+        method: zip
+        parameters: [input]
+      step:
+        process:
+          process_type: 'string-interpolated-cmd'
+          cmd: 'echo {input} > {output}'
+        publisher:
+          publisher_type: interpolated-pub
+          publish:
+            output2: '{output}'
+        environment:
+          environment_type: docker-encapsulated
+          image: busybox
